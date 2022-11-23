@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+    <head><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+        <link rel="stylesheet" href="index.css">
+        <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <h1>Emojis BlackJack Slot Machine!</h1>   
+        <div id="emoji-container"></div>
+        
+        <div id="block-btn-container">
+            <div class="single-btn-ctr">
+                <button class="block-btn" id="left-block-btn">Block!</button>
+            </div>
+            <div class="single-btn-ctr">
+                <button class="block-btn" id="middle-block-btn">Block!</button>
+            </div>
+            <div class="single-btn-ctr">
+                <button class="block-btn" id="right-block-btn">Block!</button>
+            </div>
+        </div> 
+
+        <div id="display-allowed-blocks">
+        </div>
+        
+        <div class="buttons-wrapper">
+            <button id="pull-lvr">Pull Lever!</button>
+        </div>
+
+        <div id="display-points">
+        </div>
+        <div id="total-points"></div>
+
+        <div class="table-container">
+            <table id="table-left">
+                <!-- ☀️", "⭐️", "🎃", "👿", "🧛‍♀️", "🤖", "🤠","👨‍💻","⛷","🍲" -->
+              <tr>
+                <td> ☀️☀️☀️ </td>
+                <td>300</td>
+              </tr>
+              <tr>
+                <td> ⭐️⭐️⭐️ </td>
+                <td> 200</td> 
+              <tr>
+                <td> 3 x  🤖, 🤠, 👨‍💻, ⛷, 🍲</td>
+                <td> 100</td>
+              </tr>
+              <tr>
+                <td> ☀️☀️</td>
+                <td> 100</td>
+              </tr>
+              <tr>
+                <td> ⭐️⭐️</td>
+                <td> 50</td>
+              </tr>
+              <tr>
+                <td> 2 x  🤖, 🤠, 👨‍💻, ⛷, 🍲</td>
+                <td> 25</td>
+              </tr>
+            </table>
+
+            <table id="table-right">
+                <tr>
+                 <td>👿👿👿  </td>
+                 <td rowspan="3"> back to 0!</td>
+                </tr>
+                 <td>🧛‍♀️🧛‍♀️🧛‍♀️  </td>
+                </tr>
+                <tr>
+                 <td> 🎃🎃🎃 </td>
+                </tr>
+                <tr>
+                    <td> 👿👿</td>
+                    <td> -50</td>
+                  </tr> 
+                <tr>
+                  <td> 🧛‍♀️🧛‍♀️</td>
+                  <td> -25</td>
+                </tr>
+                <tr>
+                  <td> 🎃🎃</td>
+                  <td> 10</td>
+                </tr>
+            </table>
+                 
+
+        <script src="index.js"></script>
+    </body>
+</html>
