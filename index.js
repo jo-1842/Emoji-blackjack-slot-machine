@@ -21,11 +21,11 @@ let displayAllowedBlockEl = document.getElementById("display-allowed-blocks");
 let sunshinesNum = 0;
 let totalSunshines = 0;
 
-let isSpliccyActive = false;
+
 let leverPullCount = 0;
 let allowedBlocks = leverPullCount;
 let blockedButtons = 0;
-
+let potentialBlocks = allowedBlocks - blockedButtons;
 
 //buttons
 let isLeftButtonBlocked = false;
@@ -35,7 +35,7 @@ const leftBlockBtn = document.getElementById("left-block-btn");
 const middleBlockBtn = document.getElementById("middle-block-btn");
 const rightBlockBtn = document.getElementById("right-block-btn");
 
-let potentialBlocks 
+
 
 
 
@@ -49,10 +49,7 @@ if (totalSunshines > 1000) {
     displayTotalPoints();
     }else if (totalSunshines === 1000){
         displayTotalPointsEl.innerHTML =`Congratulations!! You reached exacly <span class="sunshine-num">1000</span> sunshines!`
-    }else if (totalSunshines >= 950){
-   // isSpliccyActive = true;
-   // spliccy()
-}
+    }
 }
 
 function resetScreen(){
@@ -60,28 +57,35 @@ function resetScreen(){
     displayPointsEl.style.color="black";
     displayTotalPointsEl.style.color="black"}
 
-function displayAllowedBlock(){
+function displayPotentialBlocks(){
     displayAllowedBlockEl.innerHTML = 
-    `<span>Allowed blocks = ${allowedBlocks}/5</span>`;
+    `<span>Available blocks = ${potentialBlocks}/5</span>`;
 }
 
-displayAllowedBlock()
+displayPotentialBlocks()
 
-// Authorize button-block
 
-function authorizeButtonsBlocks(){
+
+
+
+function updateAvailableBlocks(){
+    
     //substract block(s) used last play
     allowedBlocks -= blockedButtons;
-    //easy mode  if hard{ allowedBlocks += 0.5}
-    // add 1 block per turn
-    allowedBlocks++
-     potentialBlocks = allowedBlocks - blockedButtons;
-    if (allowedBlocks < 0){
-        allowedBlocks = 0
-    } else if (allowedBlocks > 5){
-        allowedBlocks = 5
-    }
-    displayAllowedBlock()    
+    
+    //add one block per turn
+   allowedBlocks++
+   potentialBlocks = allowedBlocks - blockedButtons
+    
+    displayPotentialBlocks()
+}
+
+    function limitBlocks(){
+     if (potentialBlocks < 0){
+        potentialBlocks = 0
+    } else if (potentialBlocks > 5){
+        potentialBlocks = 5
+    }       
 }
 
 
@@ -94,17 +98,17 @@ leftBlockBtn.addEventListener("click", function(){
         potentialBlocks++
         blockedButtons--
         }else {
-        if (allowedBlocks > blockedButtons){
+            if (potentialBlocks > 0){
             blockedButtons++
             potentialBlocks--
+          
             leftBlockBtn.classList.toggle("blocked");
             isLeftButtonBlocked = !isLeftButtonBlocked;
         }
-     
-     displayAllowedBlock();
        }
-}
-)
+       displayPotentialBlocks()
+      
+})
 
 middleBlockBtn.addEventListener("click", function(){
    
@@ -114,14 +118,14 @@ middleBlockBtn.addEventListener("click", function(){
         potentialBlocks++
         blockedButtons--
         }else {
-        if (allowedBlocks > blockedButtons){
+         if ( potentialBlocks > 0){
             blockedButtons++
             potentialBlocks--
             middleBlockBtn.classList.toggle("blocked");
             isMiddleButtonBlocked = !isMiddleButtonBlocked;
         } 
      }
-     displayAllowedBlock();
+     displayPotentialBlocks();
     }
 )
 
@@ -133,14 +137,14 @@ rightBlockBtn.addEventListener("click", function(){
         potentialBlocks++
         blockedButtons--
         }else {
-        if (allowedBlocks > blockedButtons){
+        if (potentialBlocks > 0){
             blockedButtons++
             potentialBlocks--
             rightBlockBtn.classList.toggle("blocked");
             isRightButtonBlocked = !isRightButtonBlocked;
         } 
      }
-     displayAllowedBlock();
+     displayPotentialBlocks();
     }
 )
 
@@ -235,17 +239,71 @@ function displayTotalPoints(){
     displayTotalPointsEl.innerHTML =`You now owe <span class="sunshine-num">${-totalSunshines}</span>  sunshines!`;
  }
 }
+  
 
 
+
+leftBlockBtn.addEventListener("mousedown", function(){
+    if (!isLeftButtonBlocked){
+        if(potentialBlocks < blockedButtons || potentialBlocks < 0){
+        displayAllowedBlockEl.classList.add("alert")
+    }
+    }
+})
+
+
+middleBlockBtn.addEventListener("mousedown", function(){
+    if (!isMiddleButtonBlocked){
+        if(potentialBlocks < blockedButtons || potentialBlocks < 0){
+            displayAllowedBlockEl.classList.add("alert")
+        }
+    }
+})
+
+rightBlockBtn.addEventListener("mousedown", function(){
+    if (!isRightButtonBlocked){
+        if(potentialBlocks < blockedButtons || potentialBlocks < 0){
+            displayAllowedBlockEl.classList.add("alert")
+        }
+    }
+})
+
+leftBlockBtn.addEventListener("mouseup", function(){
+     displayAllowedBlockEl.classList.remove("alert")
+   })
+
+middleBlockBtn.addEventListener("mouseup", function(){
+    displayAllowedBlockEl.classList.remove("alert")
+  })
+
+rightBlockBtn.addEventListener("mouseup", function(){
+    displayAllowedBlockEl.classList.remove("alert")
+  })
+
+ // pull lever warning
+ // highlight allowed blocks when unsufficent
+ document.getElementById("pull-lvr").addEventListener("mousedown", function(){
+    if (allowedBlocks < 0){
+        displayAllowedBlockEl.classList.add("alert")
+        pullBtn.classList.add("error")
+    }
+})
+document.getElementById("pull-lvr").addEventListener("mouseup", function(){
+        displayAllowedBlockEl.classList.remove("alert")
+        pullBtn.classList.remove("error")
+    })
 
  // pull lever! 
 document.getElementById("pull-lvr").addEventListener("click", function(){
     let buttonsInBlockedPosition = document.getElementsByClassName("blocked");
-      if (allowedBlocks >= blockedButtons && !alertState){
+    console.log(allowedBlocks)
+    
+    if (allowedBlocks >= blockedButtons) {
         displayPointsEl.innerHTML ="";
         leverPullCount++;
+        updateAvailableBlocks()
         
-        authorizeButtonsBlocks()
+        
         resetScreen()
         
         sunshinesNum = 0;
@@ -256,19 +314,8 @@ document.getElementById("pull-lvr").addEventListener("click", function(){
         displayPoints()
         }
         checkSunshines()
-    }else if (allowedBlocks < blockedButtons && !alertState){
-        alertState = true;
-       // pullBtn.classList.toggle("alert");
-        pullBtn.classList.toggle("error")
-        } 
-        /// make pull lever btn red instead!!! and block gray unless there are allowed blocks
-        else if (allowedBlocks >= blockedButtons && alertState){
-        alertState = false;
-       // pullBtn.classList.toggle("alert");
-        pullBtn.classList.toggle("error")
-        } 
-    }
-)
+      }
+    })
 
 generateThreeEmojis()
 
