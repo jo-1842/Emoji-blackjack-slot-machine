@@ -1,39 +1,40 @@
 
 const emojisArray = ["☀️", "⭐️", "🎃", "👿", "🧛‍♀️", "🤖", "🤠","👨‍💻","⛷","🍲" ];
 const myEmojis = ["👨‍💻", "⛷", "🍲"];
+let blockArray = [];
+let usedJokerArray = [];
 const emojiContainer = document.getElementById("emoji-container")
-//const emojiInput = document.getElementById("emoji-input")
-//const pushBtn = document.getElementById("push-btn")
-//const unshiftBtn = document.getElementById("unshift-btn")
-//const popBtn = document.getElementById("pop-btn")
+
 
 // buttons
 const alertBtn = document.getElementsByClassName("alert");
 const pullBtn = document.getElementById("pull-lvr");
+const leftBlockBtn = document.getElementById("left-block-btn");
+const middleBlockBtn = document.getElementById("middle-block-btn");
+const rightBlockBtn = document.getElementById("right-block-btn");
 
 let alertState = false;
 
 let displayPointsEl = document.getElementById("display-points");
 let displayTotalPointsEl = document.getElementById("total-points");
 let displayAllowedBlockEl = document.getElementById("display-allowed-blocks");
+let displayUsedBlocksEl = document.getElementById("display-used-blocks");
 
 // counters
 let sunshinesNum = 0;
 let totalSunshines = 0;
-
-
 let leverPullCount = 0;
 let allowedBlocks = leverPullCount;
 let blockedButtons = 0;
 let potentialBlocks = allowedBlocks - blockedButtons;
+let jokersEmojis = "";
+let usedJokerEmojis = "";
 
-//buttons
+//buttons-counters
 let isLeftButtonBlocked = false;
 let isMiddleButtonBlocked = false;
 let isRightButtonBlocked = false;
-const leftBlockBtn = document.getElementById("left-block-btn");
-const middleBlockBtn = document.getElementById("middle-block-btn");
-const rightBlockBtn = document.getElementById("right-block-btn");
+
 
 
 
@@ -59,32 +60,56 @@ function resetScreen(){
 
 function displayPotentialBlocks(){
     displayAllowedBlockEl.innerHTML = 
-    `<span>Available blocks = ${potentialBlocks}/5</span>`;
+    `<span>Available blocks = ${allowedBlocks}/5  ${jokersEmojis}</span>`;
 }
 
 displayPotentialBlocks()
 
+function displayUsedBlocks(){
+    displayUsedBlocksEl.innerHTML = `Using : ${usedJokerEmojis}`;
+}
 
+displayUsedBlocks()
 
+updateJokerArray = () => {
+    blockArray = [];
+    for(let i = 0 ; i < allowedBlocks ; i++){
+        blockArray.push("🃏")
+    }
+    jokersEmojis = blockArray.join(" ");
+    displayPotentialBlocks()
+}
+
+updateUsedJokerArray = () => {
+    usedJokerArray = [];
+    for (let i = 0; i < blockedButtons ; i++){
+       usedJokerArray.push("🃏");
+    }
+    usedJokerEmojis = usedJokerArray.join(" ");
+    
+    displayUsedBlocks()
+   }
 
 
 function updateAvailableBlocks(){
-    
     //substract block(s) used last play
     allowedBlocks -= blockedButtons;
     
     //add one block per turn
    allowedBlocks++
-   potentialBlocks = allowedBlocks - blockedButtons
-    
-    displayPotentialBlocks()
+   
+   potentialBlocks = allowedBlocks - blockedButtons;
+   limitBlocks();
+   displayPotentialBlocks();
+   updateJokerArray();
+   updateUsedJokerArray();
 }
 
-    function limitBlocks(){
-     if (potentialBlocks < 0){
-        potentialBlocks = 0
-    } else if (potentialBlocks > 5){
-        potentialBlocks = 5
+function limitBlocks(){
+     if (allowedBlocks < 0){
+        allowedBlocks = 0
+    } else if (allowedBlocks > 5){
+        allowedBlocks = 5
     }       
 }
 
@@ -107,6 +132,7 @@ leftBlockBtn.addEventListener("click", function(){
         }
        }
        displayPotentialBlocks()
+       updateUsedJokerArray();
       
 })
 
@@ -126,6 +152,7 @@ middleBlockBtn.addEventListener("click", function(){
         } 
      }
      displayPotentialBlocks();
+     updateUsedJokerArray();
     }
 )
 
@@ -145,6 +172,7 @@ rightBlockBtn.addEventListener("click", function(){
         } 
      }
      displayPotentialBlocks();
+     updateUsedJokerArray();
     }
 )
 
@@ -283,7 +311,7 @@ rightBlockBtn.addEventListener("mouseup", function(){
  // pull lever warning
  // highlight allowed blocks when unsufficent
  document.getElementById("pull-lvr").addEventListener("mousedown", function(){
-    if (allowedBlocks < 0){
+    if (allowedBlocks < blockedButtons){
         displayAllowedBlockEl.classList.add("alert")
         pullBtn.classList.add("error")
     }
@@ -296,26 +324,26 @@ document.getElementById("pull-lvr").addEventListener("mouseup", function(){
  // pull lever! 
 document.getElementById("pull-lvr").addEventListener("click", function(){
     let buttonsInBlockedPosition = document.getElementsByClassName("blocked");
-    console.log(allowedBlocks)
-    
-    if (allowedBlocks >= blockedButtons) {
-        displayPointsEl.innerHTML ="";
-        leverPullCount++;
-        updateAvailableBlocks()
-        
-        
-        resetScreen()
-        
-        sunshinesNum = 0;
-        generateThreeEmojis()
-        calculateSunshines()
-        displayTotalPoints()
-        if (displayPointsEl.innerHTML !==`You've lost all your sunshines!`){
-        displayPoints()
+      if (allowedBlocks >= blockedButtons) {
+            displayPointsEl.innerHTML ="";
+            leverPullCount++;
+            updateAvailableBlocks()
+            resetScreen()
+            
+            sunshinesNum = 0;
+            generateThreeEmojis()
+            calculateSunshines()
+            displayTotalPoints()
+            if (displayPointsEl.innerHTML !==`You've lost all your sunshines!`){
+            displayPoints()
+            }
+            checkSunshines()
         }
-        checkSunshines()
-      }
-    })
+     })
+
+
+
+
 
 generateThreeEmojis()
 

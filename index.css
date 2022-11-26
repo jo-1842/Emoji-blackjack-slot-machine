@@ -42,8 +42,9 @@ body {
     height: 150px;
 }
 
-#display-allowed-blocks{
+.display{
     font-size: 2em;
+    padding: 20px;
 }
 
 #push-btn, #unshift-btn {
@@ -104,14 +105,6 @@ button:not(.unpushable):active {
     
 }
 
-
-#display-points, #total-points {
-    
-    text-align: center; 
-     font-size: 2rem;
-     padding: 20px;
-     
-}
 
 .sunshine-num{
     font-size: 4rem;
