@@ -208,8 +208,8 @@ function calculateSunshines(){
         if (myEmojis[0] === emojisArray[0]){
             sunshinesNum = 300;
             document.body.style.backgroundImage="url('images/sunshine.avif')"
-            displayPointsEl.style.color="gold";
-            displayTotalPointsEl.style.color="gold";
+            displayPointsEl.style.color="white";
+            displayTotalPointsEl.style.color="white";
            
         } else if  (myEmojis[0] === emojisArray[1]){
             sunshinesNum = 200;
