@@ -5,93 +5,94 @@
         <link href="https://fonts.googleapis.com/css2?family=Baloo&display=swap" rel="stylesheet">
     </head>
     <body>
-      
-        <h1>EMOJIS-BLACKJACK-SLOT-MACHINE!</h1>
-        <h2><em>Try to reach 1000 sunshines - but not one more!</em></h2>   
-        
-        <div id="emoji-container"></div>
-       
-        <div id="block-btn-container">
-            <div class="single-btn-ctr">
-                <button class="block-btn" id="left-block-btn">Block!</button>
-            </div>
-            <div class="single-btn-ctr">
-                <button class="block-btn" id="middle-block-btn">Block!</button>
-            </div>
-            <div class="single-btn-ctr">
-                <button class="block-btn" id="right-block-btn">Block!</button>
-            </div>
-        </div> 
+      <div class="main-container">
+        <div id="game-set">
+          <h1>EMOJIS-BLACKJACK-SLOT-MACHINE!</h1>
+          <h2><em>Try to reach 1000 sunshines - but not one more!</em></h2>   
+          
+          <div id="emoji-container"></div>
+          <div id="block-btn-container">
+              <div class="single-btn-ctr">
+                  <button class="block-btn" id="left-block-btn">Block!</button>
+              </div>
+              <div class="single-btn-ctr">
+                  <button class="block-btn" id="middle-block-btn">Block!</button>
+              </div>
+              <div class="single-btn-ctr">
+                  <button class="block-btn" id="right-block-btn">Block!</button>
+              </div>
+          </div> 
 
-        <div class="display" id="display-allowed-blocks">
-        </div>
 
-        <div class="display" id="display-used-blocks">
-        </div>
-        
-        
+          <div class="display-container">
+              <div class="display" id="display-allowed-blocks"></div>
+              <div class="display" id="display-used-blocks"></div>
+              <div class="display" id="display-points"></div>
+              <div class="display" id="total-points"></div>
+            
+              <div id="pull-lvr-wrapper" class="buttons-wrapper">
+                <button id="pull-lvr">Pull Lever!</button>
+              </div>
+          </div>    
+        </div><!--end of game-set-->
 
-        <div class="display" id="display-points">
-        </div>
-        <div class="display" id="total-points"></div>
 
-        <div class="buttons-wrapper">
-          <button id="pull-lvr">Pull Lever!</button>
-      </div>
-
-        <div class="table-container">
-            <table id="table-left">
-                <!-- ☀️", "⭐️", "🎃", "👿", "🧛‍♀️", "🤖", "🤠","👨‍💻","⛷","🍲" -->
-              <tr>
-                <td> ☀️☀️☀️ </td>
-                <td>300</td>
-              </tr>
-              <tr>
-                <td> ⭐️⭐️⭐️ </td>
-                <td> 200</td> 
-              <tr>
-                <td> 3 x  🤖, 🤠, 👨‍💻, ⛷, 🍲</td>
-                <td> 100</td>
-              </tr>
-              <tr>
-                <td> ☀️☀️</td>
-                <td> 100</td>
-              </tr>
-              <tr>
-                <td> ⭐️⭐️</td>
-                <td> 50</td>
-              </tr>
-              <tr>
-                <td> 2 x  🤖, 🤠, 👨‍💻, ⛷, 🍲</td>
-                <td> 25</td>
-              </tr>
-            </table>
-
-            <table id="table-right">
+          <div class="table-container">
+              <table id="table-left">
+                  <!-- ☀️", "⭐️", "🎃", "👿", "🧛‍♀️", "🤖", "🤠","👨‍💻","⛷","🍲" -->
                 <tr>
-                 <td>👿👿👿  </td>
-                 <td rowspan="3"> back to 0!</td>
-                </tr>
-                 <td>🧛‍♀️🧛‍♀️🧛‍♀️  </td>
+                  <td> ☀️☀️☀️ </td>
+                  <td>300</td>
                 </tr>
                 <tr>
-                 <td> 🎃🎃🎃 </td>
+                  <td> ⭐️⭐️⭐️ </td>
+                  <td> 200</td> 
+                <tr>
+                  <td> 3 x  🤖, 🤠, 👨‍💻, ⛷, 🍲</td>
+                  <td> 100</td>
                 </tr>
                 <tr>
-                    <td> 👿👿</td>
-                    <td> -50</td>
-                  </tr> 
-                <tr>
-                  <td> 🧛‍♀️🧛‍♀️</td>
-                  <td> -25</td>
+                  <td> ☀️☀️</td>
+                  <td> 100</td>
                 </tr>
                 <tr>
-                  <td> 🎃🎃</td>
-                  <td> 10</td>
+                  <td> ⭐️⭐️</td>
+                  <td> 50</td>
                 </tr>
-            </table>
-                 
+                <tr>
+                  <td> 2 x  🤖, 🤠, 👨‍💻, ⛷, 🍲</td>
+                  <td> 25</td>
+                </tr>
+              </table>
 
+              <table id="table-right">
+                  <tr>
+                  <td>👿👿👿  </td>
+                  <td rowspan="3"> back to 0!</td>
+                  </tr>
+                  <td>🧛‍♀️🧛‍♀️🧛‍♀️  </td>
+                  </tr>
+                  <tr>
+                  <td> 🎃🎃🎃 </td>
+                  </tr>
+                  <tr>
+                    <td> </td>
+                  </tr>
+                  <tr>
+                      <td> 👿👿</td>
+                      <td> -50</td>
+                    </tr> 
+                  <tr>
+                    <td> 🧛‍♀️🧛‍♀️</td>
+                    <td> -25</td>
+                  </tr>
+                  <tr>
+                    <td> 🎃🎃</td>
+                    <td> 10</td>
+                  </tr>
+              </table>
+          </div><!--end of talbe-container-->    
+        </div> <!--end of main-container-->
         <script src="index.js"></script>
     </body>
 </html>

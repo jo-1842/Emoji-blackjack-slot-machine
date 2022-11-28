@@ -5,12 +5,33 @@ html {
 
 body {
     padding: 10px;
-    background-image: linear-gradient(#5DA4D9, #FFF);
+    background: linear-gradient(#5DA4D9, #FFF);
+    background-attachment: fixed;
     background-size: cover;
     text-align: center;
+    }
+
+.main-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
-#emoji-container, #block-btn-container {
+.table-container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    border: 3px solid green;
+    margin-left: 50px;
+}
+
+table{
+    padding: 20px;
+}
+
+#emoji-container, 
+#block-btn-container {
     display: flex;
     justify-content: center;
     text-align: center;
@@ -20,6 +41,44 @@ body {
 #block-btn-container{
     margin: 10px 0 40px 0;
 }
+
+
+.display-container{
+    max-width: 700px;
+    margin: 0 auto;
+    display: grid;
+    grid-template: 170px 170px / 3fr  4fr 1fr;
+    grid-template-areas: 
+     "topleft topmiddle topright"
+     "bottomleft bottommiddle bottomright" ;
+}
+
+#display-allowed-blocks {
+    grid-area: topleft;
+}
+
+#display-used-blocks{
+    grid-area: bottomleft;
+}
+
+#display-points{
+    grid-area: topmiddle;
+}
+
+#total-points{
+    grid-area: bottommiddle;
+}
+
+#pull-lvr-wrapper {
+    grid-area: topright;
+    
+}
+
+.total-points {
+    grid-column: 1 / 2;
+    grid-row: 1 / 2 ;
+}
+
 
 .single-btn-ctr{
     width: 150px;
@@ -110,11 +169,7 @@ button:not(.unpushable):active {
     font-size: 4rem;
 }
 
-.table-container{
-    display: flex;
-    justify-content: space-around;
-    
-}
+
 
 td:nth-child(1){
     text-align: left;
@@ -130,4 +185,10 @@ td:nth-child(2){
 }
 
 
-
+@media all and (max-width: 1200px){
+    .table-container{
+        flex-direction: row;
+        justify-content: space-around;
+        border: 3px solid green;
+    }
+}

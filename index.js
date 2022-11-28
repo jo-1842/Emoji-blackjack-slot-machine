@@ -4,7 +4,7 @@ const myEmojis = ["👨‍💻", "⛷", "🍲"];
 let blockArray = [];
 let usedJokerArray = [];
 const emojiContainer = document.getElementById("emoji-container")
-
+let sunburn = false;
 
 // buttons
 const alertBtn = document.getElementsByClassName("alert");
@@ -44,12 +44,20 @@ let isRightButtonBlocked = false;
 
 function checkSunshines(){
 if (totalSunshines > 1000) {
-    totalSunshines = 0;
     allowedBlocks = 0;
     displayPointsEl.innerHTML =`Sunburn! You've lost all your sunshines!`;
-    displayTotalPoints();
+    document.body.style.backgroundImage="url('images/bacon.avif')";
+    displayPointsEl.style.color="white";
+    displayTotalPointsEl.style.color="white";
+    displayTotalPointsEl.innerHTML =
+    `You reached <span class="sunshine-num">${totalSunshines}</span> sunshines...`;
+    sunburn = true;
+    console.log(sunburn)
     }else if (totalSunshines === 1000){
-        displayTotalPointsEl.innerHTML =`Congratulations!! You reached exacly <span class="sunshine-num">1000</span> sunshines!`
+        displayTotalPointsEl.innerHTML =`Congratulations!! You reached <span class="sunshine-num">1000</span> sunshines!`
+        document.body.style.backgroundImage="url('images/fireworks.avif')";
+        displayPointsEl.style.color="gold";
+        displayTotalPointsEl.style.color="gold";
     }
 }
 
@@ -60,13 +68,13 @@ function resetScreen(){
 
 function displayPotentialBlocks(){
     displayAllowedBlockEl.innerHTML = 
-    `<span>Available blocks = ${allowedBlocks}/5  ${jokersEmojis}</span>`;
+    `<span>Available blocks: ${allowedBlocks}/5  <br> ${jokersEmojis}</span>`;
 }
 
 displayPotentialBlocks()
 
 function displayUsedBlocks(){
-    displayUsedBlocksEl.innerHTML = `Using : ${usedJokerEmojis}`;
+    displayUsedBlocksEl.innerHTML = `Using:  <br> ${usedJokerEmojis}`;
 }
 
 displayUsedBlocks()
@@ -205,7 +213,7 @@ function calculateSunshines(){
            
         } else if  (myEmojis[0] === emojisArray[1]){
             sunshinesNum = 200;
-            document.body.style.backgroundImage="url('images/moon.avif')";
+            document.body.style.backgroundImage="url('images/star.avif')";
             displayPointsEl.style.color="gold";
             displayTotalPointsEl.style.color="gold";
         } else if (myEmojis[0] === emojisArray[2] || (myEmojis[0] === emojisArray[3]) ||
@@ -323,12 +331,20 @@ document.getElementById("pull-lvr").addEventListener("mouseup", function(){
 
  // pull lever! 
 document.getElementById("pull-lvr").addEventListener("click", function(){
+    if (sunburn === true){
+        resetScreen();
+        totalSunshines = 0;
+        allowedBlocks = 0;
+        displayTotalPoints();
+        updateAvailableBlocks();
+        sunburn = false;
+    }else {
     let buttonsInBlockedPosition = document.getElementsByClassName("blocked");
       if (allowedBlocks >= blockedButtons) {
             displayPointsEl.innerHTML ="";
             leverPullCount++;
             updateAvailableBlocks()
-            resetScreen()
+            resetScreen();
             
             sunshinesNum = 0;
             generateThreeEmojis()
@@ -339,7 +355,8 @@ document.getElementById("pull-lvr").addEventListener("click", function(){
             }
             checkSunshines()
         }
-     })
+    }
+})
 
 
 
